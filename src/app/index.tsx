@@ -1,16 +1,29 @@
-import { View, Text, StyleSheet, Alert, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { router } from 'expo-router';
+
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
 
 export default function Index() {
-    function handleMessage() {
-        const name = "Katriel"
-        Alert.alert(`Olá, ${name}!`)
+
+    const [name, setName] = useState<string>()
+
+    function handleNext() {
+        router.navigate('/dashboard')
+    }
+
+    function onChangeText(text: string) {
+        setName(text)
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Olá, Katriel!</Text>
+            <Text style={styles.title}>Olá, {name}</Text>
 
-            <Button title="Enviar" onPress={handleMessage} />
+            <Input onChangeText={setName} />
+
+            <Button title="Continuar" onPress={handleNext} />
         </View>
     )
 }
@@ -19,7 +32,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        padding: 32
+        padding: 32,
+        gap: 16
     },
     title: {
         fontSize: 24,
